@@ -5,7 +5,7 @@ namespace TickTock.Utilities
         public const string Game = "Game";
 
         //public const string Leaderboard = "_Leaderboard";
-        //public const string Levels = "_Levels";
+        public const string Level = "_Level_";
         public const string Menu = "_Menu";
         //public const string Options = "_Options";
         //public const string Store = "_Store";

@@ -21,6 +21,7 @@ namespace TickTock.Game
         {
             GameIsRunning = true;
             SceneLoader.UnloadScene(SceneNames.Menu);
+            SceneLoader.LoadScene($"{SceneNames.Level}1");
             //GameStateEventHandler.OnGameStarted();
         }
         
@@ -29,7 +30,7 @@ namespace TickTock.Game
             // GameIsRunning = false;
             // audioPlayer.PlayGameOverSound();
             // PlayerDataInstance.Instance.UpdatePlayerAfterGameOver(scoreManager.Score);
-            // await Task.Delay(1000);
+            await Task.Delay(1000);
             // GameStateEventHandler.OnGameOver();
             // await Task.Delay(500);
             // levelManager.PrepareLevel();
