@@ -22,5 +22,17 @@ namespace TickTock.Game
                 Operators.Equal => "E",
                 _ => "N/A"
             };
+
+        public bool IsExecutedSuccessfully(float time)
+        {
+            return operatorName switch
+            {
+                Operators.After => time >= timeToExecute.Start.AsFloat(),
+                Operators.Before => time <= timeToExecute.Start.AsFloat(),
+                Operators.Between => time >= timeToExecute.Start.AsFloat() && time <= timeToExecute.Stop.AsFloat(),
+                Operators.Equal => Math.Abs(time - timeToExecute.Start.AsFloat()) < 0.01f,
+                _ => false
+            };
+        }
     }
 }

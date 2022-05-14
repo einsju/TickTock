@@ -1,5 +1,5 @@
-using System;
 using TickTock.Game;
+using TickTock.Utilities;
 using TMPro;
 using UnityEngine;
 
@@ -7,11 +7,17 @@ namespace TickTock
 {
     public class Timer : MonoBehaviour
     {
-        [SerializeField] TextMeshProUGUI timerText;
+        public static float CurrentTime { get; private set; }
         
-        float _timer;
+        TextMeshProUGUI _timerText;
 
-        public float CurrentTime => _timer;
+        void Awake()
+        {
+            _timerText = GetComponent<TextMeshProUGUI>();
+            CurrentTime = 0f;
+            if (GameManager.Instance.Level > 1)
+                CurrentTime = 60 * (GameManager.Instance.Level - 1);
+        }
 
         void Update()
         {
@@ -21,8 +27,8 @@ namespace TickTock
 
         void IncrementTimer()
         {
-            _timer += Time.deltaTime;
-            timerText.text = TimeSpan.FromSeconds(_timer).ToString(@"mm\:ss\:ff");
+            CurrentTime += Time.deltaTime;
+            _timerText.text = CurrentTime.ToFormattedString();
         }
     }
 }

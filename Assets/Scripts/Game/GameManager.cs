@@ -6,7 +6,7 @@ namespace TickTock.Game
 {
     public class GameManager : MonoBehaviour
     {
-        public static GameManager Instance;
+        public static GameManager Instance { get; private set; }
         
         // [SerializeField] LevelManager levelManager;
         // [SerializeField] ScoreManager scoreManager;
@@ -14,15 +14,22 @@ namespace TickTock.Game
         // [SerializeField] Spawner spawner;
         
         public bool GameIsRunning { get; private set; }
+        public int Level { get; private set; }
 
         void Awake() => Instance = this;
 
         public void StartGame()
         {
+            Level = 1;
             GameIsRunning = true;
             SceneLoader.UnloadScene(SceneNames.Menu);
-            SceneLoader.LoadScene($"{SceneNames.Level}1");
+            SceneLoader.LoadScene($"{SceneNames.Level}{Level}");
             //GameStateEventHandler.OnGameStarted();
+        }
+
+        public void StopGame()
+        {
+            GameIsRunning = false;
         }
         
         async Task GameOver()

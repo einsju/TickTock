@@ -8,6 +8,9 @@ namespace TickTock.Utilities
     {
         [SerializeField] TimeIntervalValue start;
         [SerializeField] TimeIntervalValue stop;
+        
+        public TimeIntervalValue Start => start;
+        public TimeIntervalValue Stop => stop;
     }
 
     [Serializable]
