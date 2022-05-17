@@ -8,16 +8,10 @@ namespace TickTock
     public class Timer : MonoBehaviour
     {
         public static float CurrentTime { get; private set; }
-        
-        TextMeshProUGUI _timerText;
 
-        void Awake()
-        {
-            _timerText = GetComponent<TextMeshProUGUI>();
-            CurrentTime = 0f;
-            if (GameManager.Instance.Level > 1)
-                CurrentTime = 60 * (GameManager.Instance.Level - 1);
-        }
+        [SerializeField] TextMeshProUGUI timerText;
+
+        void Awake() => CurrentTime = 0f;
 
         void Update()
         {
@@ -28,7 +22,7 @@ namespace TickTock
         void IncrementTimer()
         {
             CurrentTime += Time.deltaTime;
-            _timerText.text = CurrentTime.ToFormattedString();
+            timerText.text = CurrentTime.ToFormattedString();
         }
     }
 }

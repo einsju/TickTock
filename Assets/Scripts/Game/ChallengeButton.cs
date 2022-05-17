@@ -13,20 +13,20 @@ namespace TickTock.Game
         public bool IsAnswered { get; private set; }
         
         [SerializeField] Challenge challenge;
+        [SerializeField] TextMeshProUGUI operatorText;
+        [SerializeField] TextMeshProUGUI challengeText;
         
         Button _button;
-        TextMeshProUGUI _challengeText;
 
         void Awake()
         {
             _button = GetComponent<Button>();
-            _challengeText = GetComponentInChildren<TextMeshProUGUI>();
             _button.onClick.AddListener(OnChallengeExecuted);
+            operatorText.text = challenge.OperatorNameLabel;
+            challengeText.text = challenge.timeToExecute.ToString();
         }
 
         void OnDestroy() => _button.onClick.RemoveListener(OnChallengeExecuted);
-
-        void Start() => SetChallengeText(challenge.OperatorNameLabel);
 
         void OnChallengeExecuted()
         {
@@ -39,7 +39,7 @@ namespace TickTock.Game
             ChallengeButtonClicked?.Invoke(challenge, timeWhenClicked);
         }
 
-        void SetChallengeText(string text) => _challengeText.text = text;
+        void SetChallengeText(string text) => challengeText.text = text;
 
         void ValidateAnswer(float time)
         {

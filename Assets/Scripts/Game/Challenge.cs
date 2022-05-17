@@ -25,12 +25,14 @@ namespace TickTock.Game
 
         public bool IsExecutedSuccessfully(float time)
         {
+            const float tolerance = 0.01f;
+
             return operatorName switch
             {
-                Operators.After => time >= timeToExecute.Start.AsFloat(),
-                Operators.Before => time <= timeToExecute.Start.AsFloat(),
-                Operators.Between => time >= timeToExecute.Start.AsFloat() && time <= timeToExecute.Stop.AsFloat(),
-                Operators.Equal => Math.Abs(time - timeToExecute.Start.AsFloat()) < 0.01f,
+                Operators.After => time >= timeToExecute.Start,
+                Operators.Before => time <= timeToExecute.Start,
+                Operators.Between => time >= timeToExecute.Start && time <= timeToExecute.Stop,
+                Operators.Equal => Math.Abs(time - timeToExecute.Start) < tolerance,
                 _ => false
             };
         }
