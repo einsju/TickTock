@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using TickTock.Utilities;
+using TickTock.Validators;
 using UnityEngine;
 
 namespace TickTock.Game
@@ -12,18 +13,44 @@ namespace TickTock.Game
         // [SerializeField] ScoreManager scoreManager;
         // [SerializeField] GameAudioPlayer audioPlayer;
         // [SerializeField] Spawner spawner;
+        [SerializeField] Player player;
         
         public bool GameIsRunning { get; private set; }
-        public int Level { get; private set; }
+        //public int Level { get; private set; }
 
-        void Awake() => Instance = this;
+        void Awake()
+        {
+            Instance = this;
+            ChallengeValidator.ChallengeSucceeded += OnChallengeSucceeded;
+            ChallengeValidator.ChallengeFailed += OnChallengeFailed;
+        }
+
+        void OnDestroy()
+        {
+            ChallengeValidator.ChallengeSucceeded -= OnChallengeSucceeded;
+            ChallengeValidator.ChallengeFailed -= OnChallengeFailed;
+        }
+        
+        void OnChallengeSucceeded()
+        {
+            if (!GameIsRunning) return;
+            player.AddLife();
+        }
+
+        void OnChallengeFailed()
+        {
+            if (!GameIsRunning) return;
+            player.TakeLife();
+            if (player.Lives == 0) StopGame();
+        }
 
         public void StartGame()
         {
-            Level = 1;
+            //Level = 1;
             GameIsRunning = true;
             SceneLoader.UnloadScene(SceneNames.Menu);
-            SceneLoader.LoadScene($"{SceneNames.Level}{Level}");
+            //SceneLoader.LoadScene($"{SceneNames.Level}{Level}");
+            SceneLoader.LoadScene($"{SceneNames.Level}1");
             //GameStateEventHandler.OnGameStarted();
         }
 

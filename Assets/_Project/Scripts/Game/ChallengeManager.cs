@@ -18,7 +18,7 @@ namespace TickTock.Game
 
         void OnDestroy() => ChallengeButton.ChallengeButtonClicked -= ChallengeAnswered;
 
-        void ChallengeAnswered(Challenge challenge, float time)
+        void ChallengeAnswered()
         {
             if (!LevelIsFinished) return;
             GameManager.Instance.StopGame();
