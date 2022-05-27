@@ -16,7 +16,6 @@ namespace TickTock.Game
         [SerializeField] Player player;
         
         public bool GameIsRunning { get; private set; }
-        //public int Level { get; private set; }
 
         void Awake()
         {
@@ -46,11 +45,9 @@ namespace TickTock.Game
 
         public void StartGame()
         {
-            //Level = 1;
             GameIsRunning = true;
             SceneLoader.UnloadScene(SceneNames.Menu);
-            //SceneLoader.LoadScene($"{SceneNames.Level}{Level}");
-            SceneLoader.LoadScene($"{SceneNames.Level}1");
+            SceneLoader.LoadScene($"{SceneNames.Game}");
             //GameStateEventHandler.OnGameStarted();
         }
 

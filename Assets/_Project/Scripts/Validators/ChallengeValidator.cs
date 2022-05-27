@@ -8,19 +8,14 @@ namespace TickTock.Validators
         public static event Action ChallengeSucceeded;
         public static event Action ChallengeFailed;
 
-        readonly Challenge _challenge;
-
-        public ChallengeValidator(Challenge challenge) => _challenge = challenge;
-
-        public bool IsPlayerInputValid(float timeWhenClicked)
+        public bool IsPlayerInputValid(Challenge challenge, float timeWhenClicked)
         {
-            var result = _challenge.operatorName switch
+            var result = challenge.operatorName switch
             {
-                Operators.After => timeWhenClicked >= _challenge.timeToExecute.Start,
-                Operators.Before => timeWhenClicked <= _challenge.timeToExecute.Start,
-                Operators.Between => timeWhenClicked >= _challenge.timeToExecute.Start &&
-                                     timeWhenClicked <= _challenge.timeToExecute.Stop,
-                Operators.Equal => Math.Abs(timeWhenClicked - _challenge.timeToExecute.Start) < float.Epsilon,
+                Operators.Before => timeWhenClicked <= challenge.timeToExecute.Start,
+                Operators.Between => timeWhenClicked >= challenge.timeToExecute.Start &&
+                                     timeWhenClicked <= challenge.timeToExecute.Stop,
+                Operators.Equal => Math.Abs(timeWhenClicked - challenge.timeToExecute.Start) < float.Epsilon,
                 _ => false
             };
 
@@ -34,13 +29,13 @@ namespace TickTock.Validators
             return true;
         }
 
-        public bool IsTimeLimitValid(float time)
+        public bool IsTimeLimitValid(Challenge challenge, float time)
         {
-            var result = _challenge.operatorName switch
+            var result = challenge.operatorName switch
             {
-                Operators.Before => time < _challenge.timeToExecute.Start,
-                Operators.Between => time < _challenge.timeToExecute.Stop,
-                Operators.Equal => time < _challenge.timeToExecute.Start,
+                Operators.Before => time < challenge.timeToExecute.Start,
+                Operators.Between => time < challenge.timeToExecute.Stop,
+                Operators.Equal => time < challenge.timeToExecute.Start,
                 _ => true
             };
             

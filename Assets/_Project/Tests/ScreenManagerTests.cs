@@ -8,7 +8,7 @@ namespace TickTock
     public class ScreenManagerTests
     {
         IList<GameObject> _screens;
-        ScreenManager Sut => new ScreenManager(_screens);
+        ScreenManager Sut => new(_screens);
         
         [Test]
         public void OpenScreen_ShouldNotActivateScreen_WhenScreensAreNotAssigned()
